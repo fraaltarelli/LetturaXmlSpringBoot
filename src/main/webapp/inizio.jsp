@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -12,8 +12,7 @@
 </head>
 <body>
 
-<input id="file-input" type="file" name="name" accept=".xml"/>
-<button onclick="leggiAllegato()">Leggi Allegato</button>
-<p id="p1"> </p>
+<a id="scaricaPdf" href="http://localhost:8080/api/allegato/leggiAttachment/3" download>  Scarica PDF </a>
+
 </body>
-</html>
+</html> --%>

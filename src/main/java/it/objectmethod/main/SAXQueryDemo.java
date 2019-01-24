@@ -11,74 +11,57 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import it.objectmethod.leggixml.model.Allegato;
 
+
 public class SAXQueryDemo {
 	
-   public static void main(String[] args) {
-	   
+	byte[] pdf;
+	private String nomeFile;
 
-      try {
-         File inputFile = new File("src/it/objectmethod/main/IT02355260981_0H2e7.xml");
-         SAXParserFactory factory = SAXParserFactory.newInstance();
-         SAXParser saxParser = factory.newSAXParser();
-         UserHandler userhandler = new UserHandler();
-         saxParser.parse(inputFile, userhandler);  
-         Allegato allegato = userhandler.allegato;
-         stampa(allegato);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      
-   }
-   
-   public static void stampa(Allegato allegato){
-	   System.out.println("Nome Attachment: "+allegato.getNomeAttachment());
-	   System.out.println("Formato Attachment: "+allegato.getFormatoAttachment());
-	   System.out.println("Attachment: "+allegato.getAttachment());
-	   String attachment = allegato.getAttachment();
-	   
-	   byte[] bytesEncoded = Base64.decodeBase64(attachment.getBytes());
-	   
-//	   byte[] octets = Base64.decodeBase64(bytesEncoded);
-//	   writeFile(bytesEncoded);
-//	   try {
-//		FileUtils.writeByteArrayToFile(new File("C:\\Users\\Francesco Altarelli\\Documents\\file2"), bytesEncoded);
-//	} catch (IOException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-	   
-	   try(OutputStream out = new FileOutputStream("filename3.pdf")){
-		    out.write(bytesEncoded);
-		} catch (IOException e) {
-		    e.printStackTrace();
+	public String getNomeFile() {
+		return nomeFile;
+	}
+
+	public void setNomeFile(String nomeFile) {
+		this.nomeFile = nomeFile;
+	}
+
+	public byte[] leggiPdfDaXml(String nomeFileXml,String pathXml) {
+
+		try {
+			File inputFile = new File(pathXml+nomeFileXml+".xml");
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser saxParser = factory.newSAXParser();
+			UserHandler userhandler = new UserHandler();
+			saxParser.parse(inputFile, userhandler);  
+			Allegato allegato = userhandler.allegato;
+			System.out.println("Nome Attachment: "+allegato.getNomeAttachment());
+			System.out.println("Formato Attachment: "+allegato.getFormatoAttachment());
+			System.out.println("Attachment: "+allegato.getAttachment());
+			String attachment = allegato.getAttachment();
+			nomeFile = allegato.getNomeAttachment();
+
+			byte[] bytesEncoded = Base64.decodeBase64(attachment.getBytes());
+
+			pdf = bytesEncoded;
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	  
-	   
-	   
-	   
-	   
-   }
-   
-//public static void writeFile(byte[] bytesEncoded) {
-//	String path = "C:/file.txt";
-//	try {
-//		File file = new File(path);
-//		FileWriter fw = new FileWriter(file);
-//		fw.write(bytesEncoded);
-//		fw.flush();
-//		fw.close();
-//	}
-//	catch(IOException e) {
-//		e.printStackTrace();
-//	}
-//}
-   
+		return pdf;
+
+	}
+
 }
 
 

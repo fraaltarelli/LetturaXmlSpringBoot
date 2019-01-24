@@ -19,14 +19,7 @@ class UserHandler extends DefaultHandler {
 	   public void startElement(String uri, 
 	      String localName, String qName, Attributes attributes)
 	      throws SAXException {
-	        
-//		   currentElement = true;
-//	      if (qName.equalsIgnoreCase("allegato")) {
-//	         rollNo = attributes.getValue("rollno");
-//	      }
-//	      if(("393").equals(rollNo) && qName.equalsIgnoreCase("student")) {
-//	         System.out.println("Start Element :" + qName);      
-//	      }       
+	       
 	      if (qName.equalsIgnoreCase("NomeAttachment")) {
 	         bNomeAttachment = true;
 	      } 
@@ -60,18 +53,7 @@ class UserHandler extends DefaultHandler {
 	   @Override
 	   public void characters(
 	      char ch[], int start, int length) throws SAXException {
-
-//	      if (bNomeAttachment) {
-//	    	 buffer+= new String(ch, start, length);
-//	         System.out.println("Nome Attachment: " + nomeAttachment);
-//	    	 bNomeAttachment = false;
-//	      } 
-//	      if (bFormatoAttachment) {
-//	    	 buffer+=new String(ch, start, length);
-//	         System.out.println("Formato Attachment: " + formatoAttachment);
-//	         System.out.print("Attachment: ");
-//	         bFormatoAttachment = false;
-//	      } 
+		   
 	         buffer += new String(ch,start, length);
 	       
 	      } 
